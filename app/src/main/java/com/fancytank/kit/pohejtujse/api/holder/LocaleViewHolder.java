@@ -1,4 +1,4 @@
-package com.fancytank.kit.pohejtujse.api.locale;
+package com.fancytank.kit.pohejtujse.api.holder;
 
 import android.view.View;
 import android.widget.TextView;

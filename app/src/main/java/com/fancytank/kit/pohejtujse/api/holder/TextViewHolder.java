@@ -1,4 +1,4 @@
-package com.fancytank.kit.pohejtujse.api.locale;
+package com.fancytank.kit.pohejtujse.api.holder;
 
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +19,8 @@ public class TextViewHolder {
             }
         });
     }
+
+    //TODO on enter done
 
     private void updateView() {
         editText.setVisibility(View.VISIBLE);

@@ -4,7 +4,9 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -16,15 +18,20 @@ import android.view.View;
 
 import com.fancytank.kit.pohejtujse.api.HateClient;
 import com.fancytank.kit.pohejtujse.api.dto.Hate;
-import com.fancytank.kit.pohejtujse.api.locale.LocaleViewHolder;
-import com.fancytank.kit.pohejtujse.api.locale.TextViewHolder;
+import com.fancytank.kit.pohejtujse.api.holder.CameraViewHolder;
+import com.fancytank.kit.pohejtujse.api.holder.LocaleViewHolder;
+import com.fancytank.kit.pohejtujse.api.holder.TextViewHolder;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LocaleViewHolder.LocaleClickedListener {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
     private HateClient hateClient;
     private LocaleViewHolder localeViewHolder;
     private TextViewHolder textViewHolder;
+    private CameraViewHolder cameraViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
         setContentView(R.layout.activity_main);
         localeViewHolder = new LocaleViewHolder(findViewById(R.id.locale_container), this);
         textViewHolder = new TextViewHolder(findViewById(R.id.text_container));
+        cameraViewHolder = new CameraViewHolder(findViewById(R.id.camera_container), this);
 
         hateClient = new HateClient();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -46,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
         });
     }
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
     LocationManager locationManager;
     String provider;
 
@@ -108,6 +116,15 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) throws UnsupportedOperationException {
         onLocaleClicked();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            cameraViewHolder.setImageBitmap(imageBitmap);
+        }
     }
 
 }
