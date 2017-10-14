@@ -1,7 +1,6 @@
 package com.fancytank.kit.pohejtujse;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,49 +9,28 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.fancytank.kit.pohejtujse.api.HateClient;
-import com.fancytank.kit.pohejtujse.api.dto.Coordinates;
 import com.fancytank.kit.pohejtujse.api.dto.Hate;
+import com.fancytank.kit.pohejtujse.api.locale.LocaleViewHolder;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocaleViewHolder.LocaleClickedListener {
     private HateClient hateClient;
+    private LocaleViewHolder localeViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        localeViewHolder = new LocaleViewHolder(findViewById(R.id.locale_container), this);
 
         hateClient = new HateClient();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fabClicked();
-            }
-        });
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
-    }
-
-    public void fabClicked() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            askPerm(this);
-            return;
-        }
-        trySendLocation();
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -84,11 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) throws UnsupportedOperationException {
-        trySendLocation();
-    }
-
-    private void trySendLocation() {
+    public void onLocaleClicked() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             askPerm(this);
             return;
@@ -105,35 +79,22 @@ public class MainActivity extends AppCompatActivity {
                 // Found best last known location: %s", l);
                 bestLocation = l;
             } else {
-                Hate dupa = new Hate();
-                dupa.coordinates = new Coordinates(bestLocation.getLatitude(), bestLocation.getLongitude());
-                dupa.text = "krzywa podłoga, głupie kafelki";
-                hateClient.postHate(dupa);
+                localeViewHolder.setLocale(bestLocation.getLatitude(), bestLocation.getLongitude());
             }
         }
-
 //        askForGPS(this); todo later
     }
 
-    private void sendLocatonRequest() {
-
+    private void sedRequest() {
+        Hate dupa = new Hate();
+        dupa.coordinates = localeViewHolder.getCoordinates();
+        dupa.text = "krzywa podłoga, głupie kafelki";
+        hateClient.postHate(dupa);
     }
-//
-//    private void askForGPS(final Activity activity) {
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(activity).setMessage("GPS PLZ")
-//                .setPositiveButton("OK",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface d, int id) {
-//                                trySendLocation();
-//                                d.dismiss();
-//                            }
-//                        })
-//                .setNegativeButton("Cancel",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface d, int id) {
-//                                d.cancel();
-//                            }
-//                        });
-//        builder.create().show();
-//    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) throws UnsupportedOperationException {
+        onLocaleClicked();
+    }
+
 }
