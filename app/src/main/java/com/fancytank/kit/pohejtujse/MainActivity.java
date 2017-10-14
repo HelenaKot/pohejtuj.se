@@ -9,8 +9,10 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.fancytank.kit.pohejtujse.api.HateClient;
 import com.fancytank.kit.pohejtujse.api.dto.Hate;
@@ -34,6 +36,14 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
         hateClient = new HateClient();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendRequest();
+            }
+        });
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -88,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
 //        askForGPS(this); todo later
     }
 
-    private void sedRequest() {
+    private void sendRequest() {
         Hate dupa = new Hate();
         dupa.coordinates = localeViewHolder.getCoordinates();
         dupa.text = textViewHolder.getText();
