@@ -7,4 +7,9 @@ public class Coordinates {
     public float x;
     @SerializedName("y")
     public float y;
+
+    public Coordinates(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
 }

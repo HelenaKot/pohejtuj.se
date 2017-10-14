@@ -7,8 +7,8 @@ public class Hate {
     public Coordinates coordinates;
 
     @SerializedName("photos")
-    String[] images; //base64
+    public String[] images; //base64
 
     @SerializedName("text")
-    String text;
+    public String text;
 }
