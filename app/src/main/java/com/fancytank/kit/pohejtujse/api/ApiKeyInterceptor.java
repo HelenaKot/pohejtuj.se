@@ -12,6 +12,7 @@ import okhttp3.Response;
  */
 
 public class ApiKeyInterceptor implements Interceptor {
+    private final static String API_KEY = "a";
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -19,7 +20,7 @@ public class ApiKeyInterceptor implements Interceptor {
         HttpUrl originalHttpUrl = original.url();
 
         HttpUrl url = originalHttpUrl.newBuilder()
-                .addQueryParameter("api_key", HateClient.API_KEY)
+                .addQueryParameter("api_key", API_KEY)
                 .build();
 
         // Request customization: add request headers
