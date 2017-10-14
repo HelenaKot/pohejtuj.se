@@ -17,7 +17,7 @@ public class LocaleViewHolder {
 
     public LocaleViewHolder(View localeView, final LocaleClickedListener listener) {
         localeTextView = localeView.findViewById(R.id.tv_locale);
-        localeView.findViewById(R.id.locale_container).setOnClickListener(new View.OnClickListener() {
+        localeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onLocaleClicked();
@@ -30,7 +30,7 @@ public class LocaleViewHolder {
         this.y = y;
 
         localeTextView.setVisibility(View.VISIBLE);
-        localeTextView.setText(localeTextView.getContext().getString(R.string.locale_string, String.valueOf(x),  String.valueOf(y)));
+        localeTextView.setText(localeTextView.getContext().getString(R.string.locale_string, String.valueOf(x), String.valueOf(y)));
     }
 
     public Coordinates getCoordinates() {

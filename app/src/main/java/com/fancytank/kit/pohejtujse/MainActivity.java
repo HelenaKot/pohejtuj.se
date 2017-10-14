@@ -15,18 +15,21 @@ import android.support.v7.app.AppCompatActivity;
 import com.fancytank.kit.pohejtujse.api.HateClient;
 import com.fancytank.kit.pohejtujse.api.dto.Hate;
 import com.fancytank.kit.pohejtujse.api.locale.LocaleViewHolder;
+import com.fancytank.kit.pohejtujse.api.locale.TextViewHolder;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LocaleViewHolder.LocaleClickedListener {
     private HateClient hateClient;
     private LocaleViewHolder localeViewHolder;
+    private TextViewHolder textViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         localeViewHolder = new LocaleViewHolder(findViewById(R.id.locale_container), this);
+        textViewHolder = new TextViewHolder(findViewById(R.id.text_container));
 
         hateClient = new HateClient();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -45,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
         // this thread waiting for the user's response! After the user
         // sees the explanation, try again to request the permission.
         new AlertDialog.Builder(thisActivity)
-                .setTitle("eeeeeee")
-                .setMessage("dfdfdfd")
+                .setTitle("Localization Permission")
+                .setMessage("this app needs localization permission")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
     private void sedRequest() {
         Hate dupa = new Hate();
         dupa.coordinates = localeViewHolder.getCoordinates();
-        dupa.text = "krzywa podłoga, głupie kafelki";
+        dupa.text = textViewHolder.getText();
         hateClient.postHate(dupa);
     }
 
