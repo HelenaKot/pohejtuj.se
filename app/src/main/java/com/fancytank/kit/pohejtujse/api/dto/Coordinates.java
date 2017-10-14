@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class Coordinates {
     @SerializedName("x")
-    public float x;
+    public double x;
     @SerializedName("y")
-    public float y;
+    public double y;
 
-    public Coordinates(float x, float y) {
+    public Coordinates(double x, double y) {
         this.x = x;
         this.y = y;
     }
