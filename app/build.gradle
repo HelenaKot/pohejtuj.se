@@ -36,6 +36,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.0.0'
     compile 'com.android.support:design:26.0.0'
     compile 'com.android.support:cardview-v7:26.0.0'
+    compile 'com.mindorks:paracamera:0.2.2'
 
     compile 'com.google.android.gms:play-services-location:8.4.0'
 

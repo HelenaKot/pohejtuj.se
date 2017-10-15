@@ -24,6 +24,8 @@ import com.fancytank.kit.pohejtujse.api.holder.TextViewHolder;
 
 import java.util.List;
 
+import static com.mindorks.paracamera.Camera.REQUEST_TAKE_PHOTO;
+
 public class MainActivity extends AppCompatActivity implements LocaleViewHolder.LocaleClickedListener {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -120,10 +122,8 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            cameraViewHolder.setImageBitmap(imageBitmap);
+        if (requestCode == REQUEST_TAKE_PHOTO ) {
+            cameraViewHolder.notifyImageTaken();
         }
     }
 
