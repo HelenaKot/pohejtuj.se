@@ -1,4 +1,4 @@
-package com.fancytank.kit.pohejtujse.api.holder;
+package com.fancytank.kit.pohejtujse.holder;
 
 import android.app.Activity;
 import android.graphics.Bitmap;

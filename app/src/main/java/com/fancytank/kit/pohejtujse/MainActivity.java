@@ -17,9 +17,7 @@ import android.view.View;
 
 import com.fancytank.kit.pohejtujse.api.HateClient;
 import com.fancytank.kit.pohejtujse.api.dto.Hate;
-import com.fancytank.kit.pohejtujse.api.holder.CameraViewHolder;
-import com.fancytank.kit.pohejtujse.api.holder.LocaleViewHolder;
-import com.fancytank.kit.pohejtujse.api.holder.TextViewHolder;
+import  com.fancytank.kit.pohejtujse.holder.*;
 
 import java.util.List;
 
