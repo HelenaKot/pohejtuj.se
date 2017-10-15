@@ -14,7 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HateClient {
-    static final String API_URL = "https://d5b914a9.ngrok.io";
+    static final String API_URL = "http://52203be4.ngrok.io";
     static final String POST_ENDPOINT = "/hate";
 
     HateService myService;

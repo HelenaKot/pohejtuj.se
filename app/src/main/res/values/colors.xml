@@ -22,4 +22,8 @@
     <color name="blue_base">#4db6ac</color>
     <color name="blue_lighter">#82e9de</color>
     <color name="blue_darker">#00867d</color>
+
+    <color name="green_base">#64dd17</color>
+    <color name="green_lighter">#9cff57</color>
+    <color name="green_darker">#1faa00</color>
 </resources>

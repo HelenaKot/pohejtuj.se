@@ -11,10 +11,13 @@ public class Hate implements Parcelable { //todo sorry
     public Coordinates coordinates;
 
     @SerializedName("photos")
-    public String[] images; //base64
+    public String[] images; //base64ll
 
     @SerializedName("text")
     public String text;
+
+    @SerializedName("wkurw")
+    public float wkurw; //0-1
 
     public Hate() {
 

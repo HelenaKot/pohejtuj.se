@@ -1,4 +1,4 @@
-package com.fancytank.kit.pohejtujse.api;
+package com.fancytank.kit.pohejtujse;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 
 // 10/15/2017.
 public class ImageUtil {
+
     public static Bitmap convert(String base64Str) throws IllegalArgumentException {
         byte[] decodedBytes = Base64.decode(
                 base64Str.substring(base64Str.indexOf(",") + 1),
@@ -20,8 +21,7 @@ public class ImageUtil {
     public static String convert(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-
-        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+        return "data:image/png;base64," + Base64.encodeToString(outputStream.toByteArray(), Base64.URL_SAFE);
     }
 
 }

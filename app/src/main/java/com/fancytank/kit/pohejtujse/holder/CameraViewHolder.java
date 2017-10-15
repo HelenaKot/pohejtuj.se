@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.fancytank.kit.pohejtujse.ImageUtil;
 import com.fancytank.kit.pohejtujse.R;
-import com.fancytank.kit.pohejtujse.api.ImageUtil;
 import com.mindorks.paracamera.Camera;
 
 // 10/15/2017.
