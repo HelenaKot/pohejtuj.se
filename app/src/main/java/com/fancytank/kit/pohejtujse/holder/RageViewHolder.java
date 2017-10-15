@@ -1,6 +1,7 @@
 package com.fancytank.kit.pohejtujse.holder;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,26 +13,30 @@ import android.widget.TextView;
 
 import com.fancytank.kit.pohejtujse.R;
 
+import java.util.Random;
+
 import static android.content.Context.SENSOR_SERVICE;
 
 // 10/15/2017.
 public class RageViewHolder implements SensorEventListener {
     private final static float G = 9.7803f;
     SensorManager sensorManager;
+    private Random random = new Random();
 
     ImageView rageImage;
     TextView debugText;
+    View background;
 
     private float accelerationSum = 0;
     private float maxScale = 100f;
     private RageType[] drawable = {
             new RageType(R.drawable.a0, -100f),
-            new RageType(R.drawable.a1, 6f),
-            new RageType(R.drawable.a2, 10f),
-            new RageType(R.drawable.a3, 20f),
-            new RageType(R.drawable.a4, 40f),
-            new RageType(R.drawable.a5, 60f),
-            new RageType(R.drawable.a6, 80f),
+            new RageType(R.drawable.a1, 10f),
+            new RageType(R.drawable.a2, 15f),
+            new RageType(R.drawable.a3, 30f),
+            new RageType(R.drawable.a4, 50f),
+            new RageType(R.drawable.a5, 80f),
+            new RageType(R.drawable.a6, 99f),
     };
     int rageIndex = -1;
 
@@ -49,6 +54,7 @@ public class RageViewHolder implements SensorEventListener {
     public RageViewHolder(View hateView, Activity root) {
         rageImage = hateView.findViewById(R.id.hate_image);
         debugText = hateView.findViewById(R.id.debug_text);
+        background = hateView.findViewById(R.id.rage_container);
 
         sensorManager = (SensorManager) root.getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
@@ -89,6 +95,8 @@ public class RageViewHolder implements SensorEventListener {
 
     private void updateImage(int i) {
         rageImage.setImageResource(drawable[i].drawableRes);
+        Color bg = new Color();
+        background.setBackgroundColor(Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
     }
 
     @Override
