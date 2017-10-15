@@ -1,13 +1,20 @@
 package com.fancytank.kit.pohejtujse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.fancytank.kit.pohejtujse.api.HateClient;
+import com.fancytank.kit.pohejtujse.api.OkActivity;
 import com.fancytank.kit.pohejtujse.api.dto.Hate;
+import com.fancytank.kit.pohejtujse.api.event.HttpOkEvent;
 import com.fancytank.kit.pohejtujse.holder.CameraViewHolder;
 import com.fancytank.kit.pohejtujse.holder.RageViewHolder;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class SendActivity extends AppCompatActivity {
     private HateClient hateClient;
@@ -31,6 +38,25 @@ public class SendActivity extends AppCompatActivity {
                 sendMsg(hate);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(HttpOkEvent event) {
+        Intent intent = new Intent(this, OkActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     private void sendMsg(Hate hateMsg) {

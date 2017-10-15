@@ -31,7 +31,10 @@
         <activity
             android:name=".SendActivity"
             android:label="@string/title_activity_send"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".api.OkActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

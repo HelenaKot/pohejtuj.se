@@ -21,7 +21,7 @@
         android:id="@+id/tv_text"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:hint="Boy, do I hate this place..."
+        android:hint="@string/hint_hate"
         android:layout_weight="1"
         android:gravity="top"
         android:background="@color/yellow_lighter"

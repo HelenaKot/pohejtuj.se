@@ -21,7 +21,6 @@ import com.fancytank.kit.pohejtujse.holder.CameraViewHolder;
 import com.fancytank.kit.pohejtujse.holder.LocaleViewHolder;
 import com.fancytank.kit.pohejtujse.holder.TextViewHolder;
 
-import java.io.Serializable;
 import java.util.List;
 
 import static com.mindorks.paracamera.Camera.REQUEST_TAKE_PHOTO;
