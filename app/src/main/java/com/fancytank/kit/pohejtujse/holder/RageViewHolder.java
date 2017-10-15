@@ -78,7 +78,7 @@ public class RageViewHolder implements SensorEventListener {
 
     private void updateRageIndex() {
         for (int index = 0; index < drawable.length - 1; index++) {
-            if (rageIndex <= index++ && accelerationSum > drawable[index].rageOMeter) {
+            if (rageIndex <= index && accelerationSum > drawable[index++].rageOMeter) {
                 rageIndex = index;
                 updateImage(index);
                 System.out.println(index);
