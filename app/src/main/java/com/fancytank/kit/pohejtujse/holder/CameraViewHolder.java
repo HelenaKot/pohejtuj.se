@@ -15,7 +15,7 @@ public class CameraViewHolder {
     private ImageView container;
     private Activity root;
     private Camera camera;
-    private Bitmap bitmap;
+    static private Bitmap bitmap; // todo oh god forgive me for i have sinned
 
     public CameraViewHolder(final View cameraView, Activity root) {
         this.container = cameraView.findViewById(R.id.camera_image);
@@ -49,7 +49,7 @@ public class CameraViewHolder {
                 .setName("ali_" + System.currentTimeMillis())
                 .setImageFormat(Camera.IMAGE_JPEG)
                 .setCompression(75)
-                .setImageHeight(1000)// it will try to achieve this height as close as possible maintaining the aspect ratio;
+                .setImageHeight(500)// it will try to achieve this height as close as possible maintaining the aspect ratio;
                 .build(root);
     }
 
@@ -68,7 +68,9 @@ public class CameraViewHolder {
         container.setImageBitmap(imageBitmap);
     }
 
-    public String getImage() {
+    public static String getImage() {
+        if (bitmap == null)
+            return null;
         return ImageUtil.convert(bitmap);
     }
 }

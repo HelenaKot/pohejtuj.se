@@ -10,24 +10,26 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.fancytank.kit.pohejtujse.api.HateClient;
 import com.fancytank.kit.pohejtujse.api.dto.Hate;
-import  com.fancytank.kit.pohejtujse.holder.*;
+import com.fancytank.kit.pohejtujse.holder.CameraViewHolder;
+import com.fancytank.kit.pohejtujse.holder.LocaleViewHolder;
+import com.fancytank.kit.pohejtujse.holder.TextViewHolder;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.mindorks.paracamera.Camera.REQUEST_TAKE_PHOTO;
 
 public class MainActivity extends AppCompatActivity implements LocaleViewHolder.LocaleClickedListener {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public static final String SEND_DATA_BUNDLE_CODE = "sendDataReqCode";
 
-    private HateClient hateClient;
     private LocaleViewHolder localeViewHolder;
     private TextViewHolder textViewHolder;
     private CameraViewHolder cameraViewHolder;
@@ -40,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
         textViewHolder = new TextViewHolder(findViewById(R.id.text_container));
         cameraViewHolder = new CameraViewHolder(findViewById(R.id.camera_container), this);
 
-        hateClient = new HateClient();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
 
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendRequest();
+                goToRequest();
             }
         });
     }
@@ -105,12 +106,21 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
 //        askForGPS(this); todo later
     }
 
-    private void sendRequest() {
-        Hate dupa = new Hate();
-        dupa.coordinates = localeViewHolder.getCoordinates();
-        dupa.text = textViewHolder.getText();
-        dupa.images = new String[]{cameraViewHolder.getImage()};
-        hateClient.postHate(dupa);
+
+    private void goToRequest() {
+        Intent intent = new Intent(this, SendActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SEND_DATA_BUNDLE_CODE, makeRequest());
+        intent.putExtras(bundle);
+        startActivity(intent);
+        //todo ovveride pending transition
+    }
+
+    private Parcelable makeRequest() {
+        Hate hateMsg = new Hate();
+        hateMsg.coordinates = localeViewHolder.getCoordinates();
+        hateMsg.text = textViewHolder.getText();
+        return hateMsg;
     }
 
     @Override
