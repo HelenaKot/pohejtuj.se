@@ -21,7 +21,7 @@ public class ImageUtil {
     public static String convert(Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-        return "data:image/png;base64," + Base64.encodeToString(outputStream.toByteArray(), Base64.URL_SAFE);
+        return "data:image/png;base64," + Base64.encodeToString(outputStream.toByteArray(), Base64.NO_PADDING | Base64.NO_WRAP);
     }
 
 }
