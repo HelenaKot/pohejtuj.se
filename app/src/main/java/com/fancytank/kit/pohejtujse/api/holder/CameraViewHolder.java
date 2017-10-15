@@ -1,22 +1,21 @@
 package com.fancytank.kit.pohejtujse.api.holder;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.fancytank.kit.pohejtujse.R;
+import com.fancytank.kit.pohejtujse.api.ImageUtil;
 import com.mindorks.paracamera.Camera;
 
 // 10/15/2017.
 public class CameraViewHolder {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     private ImageView container;
     private Activity root;
-    Camera camera;
+    private Camera camera;
+    private Bitmap bitmap;
 
     public CameraViewHolder(final View cameraView, Activity root) {
         this.container = cameraView.findViewById(R.id.camera_image);
@@ -34,15 +33,9 @@ public class CameraViewHolder {
 
         try {
             camera.takePicture();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-//
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (takePictureIntent.resolveActivity(root.getPackageManager()) != null) {
-//            root.startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//        }
     }
 
     private void buildCamera() {
@@ -61,8 +54,8 @@ public class CameraViewHolder {
     }
 
     public void notifyImageTaken() {
-        Bitmap bitmap = camera.getCameraBitmap();
-        if(bitmap != null) {
+        bitmap = camera.getCameraBitmap();
+        if (bitmap != null) {
             setImageBitmap(bitmap);
         }
     }
@@ -73,5 +66,9 @@ public class CameraViewHolder {
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         container.setLayoutParams(params);
         container.setImageBitmap(imageBitmap);
+    }
+
+    public String getImage() {
+        return ImageUtil.convert(bitmap);
     }
 }

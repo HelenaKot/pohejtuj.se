@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -112,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
         Hate dupa = new Hate();
         dupa.coordinates = localeViewHolder.getCoordinates();
         dupa.text = textViewHolder.getText();
+        dupa.images = new String[]{cameraViewHolder.getImage()};
         hateClient.postHate(dupa);
     }
 
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_TAKE_PHOTO ) {
+        if (requestCode == REQUEST_TAKE_PHOTO) {
             cameraViewHolder.notifyImageTaken();
         }
     }
