@@ -12,17 +12,12 @@ public class LocaleViewHolder {
     private double x = 0, y = 0;
 
     public interface LocaleClickedListener {
-        void onLocaleClicked();
+        void tryUpdateLocale();
     }
 
     public LocaleViewHolder(View localeView, final LocaleClickedListener listener) {
         localeTextView = localeView.findViewById(R.id.tv_locale);
-        localeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onLocaleClicked();
-            }
-        });
+        listener.tryUpdateLocale();
     }
 
     public void setLocale(double x, double y) {

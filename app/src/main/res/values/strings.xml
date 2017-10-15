@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">pohejtuj.se</string>
     <string name="action_settings">Settings</string>
-    <string name="locale_string">x = %1$s \n y= %2$s</string>
+    <string name="locale_string">x = %1$s \ny = %2$s</string>
     <string name="title_activity_send">SendActivity</string>
     <string name="ok_text">Dziękuję za podzielenie się swoją opinią</string>
     <string name="hint_hate">Ale nie cierpię tego miejsca...</string>

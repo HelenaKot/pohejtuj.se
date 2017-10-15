@@ -10,8 +10,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,7 +25,7 @@ import java.util.List;
 
 import static com.mindorks.paracamera.Camera.REQUEST_TAKE_PHOTO;
 
-public class MainActivity extends AppCompatActivity implements LocaleViewHolder.LocaleClickedListener {
+public class MainActivity extends AppCompatActivity implements LocaleViewHolder.LocaleClickedListener, TextViewHolder.TextListener {
     static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static final String SEND_DATA_BUNDLE_CODE = "sendDataReqCode";
 
@@ -33,19 +33,22 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
     private TextViewHolder textViewHolder;
     private CameraViewHolder cameraViewHolder;
 
+    private View send;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         localeViewHolder = new LocaleViewHolder(findViewById(R.id.locale_container), this);
-        textViewHolder = new TextViewHolder(findViewById(R.id.text_container));
+        textViewHolder = new TextViewHolder(findViewById(R.id.text_container), this);
         cameraViewHolder = new CameraViewHolder(findViewById(R.id.camera_container), this);
+        send = findViewById(R.id.send_container);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        send = findViewById(R.id.send_container);
+        findViewById(R.id.send_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToRequest();
@@ -82,7 +85,16 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
     }
 
     @Override
-    public void onLocaleClicked() {
+    public void tryUpdateLocale() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                updateLocale();
+            }
+        }, 300);
+    }
+
+    private void updateLocale() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             askPerm(this);
             return;
@@ -100,8 +112,10 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
                 bestLocation = l;
             } else {
                 localeViewHolder.setLocale(bestLocation.getLatitude(), bestLocation.getLongitude());
+                return;
             }
         }
+        tryUpdateLocale();
 //        askForGPS(this); todo later
     }
 
@@ -124,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) throws UnsupportedOperationException {
-        onLocaleClicked();
+        tryUpdateLocale();
     }
 
     @Override
@@ -134,4 +148,9 @@ public class MainActivity extends AppCompatActivity implements LocaleViewHolder.
         }
     }
 
+    @Override
+    public void onTextChanged(boolean notEmpty) {
+        if (notEmpty)
+            send.setVisibility(View.VISIBLE);
+    }
 }
